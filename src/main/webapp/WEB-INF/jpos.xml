@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE JposEntries PUBLIC "-//JavaPOS//DTD//EN" "jpos/res/jcl.dtd">
+<JposEntries>
+    <!--Saved by JavaPOS jpos.config/loader (JCL) version 2.2.0 on 08.10.15 12:45-->
+    <JposEntry logicalName="FiscalPrinter">
+        <creation factoryClass="ru.atol.drivers10.jpos.fptr.AtolJposServiceInstanceFactory"
+                  serviceClass="ru.atol.drivers10.jpos.fptr.FiscalPrinterService"/>
+        <vendor name="ATOL" url="http://www.atol.ru"/>
+        <jpos category="FiscalPrinter" version="1.14"/>
+        <product name="Fiscal printer service" description="AtolFptr"
+                 url="http://www.javapos.com"/>
+
+        <!-- Канал обмена с ККТ (USB, COM, TCP, BLUETOOTH) -->
+        <prop name="channel" type="String" value="USB"/>
+        <!-- IP-адрес и порт ККТ (в случае канала TCP) -->
+        <!--<prop name="ip" type="String" value="192.168.1.10:5555"/> -->
+       <!-- COM-порт (в случае канала COM)
+           Windows: COM1
+           Linux: /dev/ttyS3 -->
+        <!--<prop name="com" type="String" value="COM5"/> -->
+       <!-- Скорость соединения с ККТ (в случае канала COM) -->
+        <!--<prop name="baudrate" type="String" value="115200"/> -->
+       <!-- MAC-адрес ККТ (в случае канала BLIETOOTH) -->
+        <!--  <prop name="mac" type="String" value="FF:FF:FF:FF:FF:FF"/> -->
+
+        <!-- Соответствие типов оплат в ККТ и JPOS -->
+        <prop name="paymentCash" type="String" value="00"/>
+        <prop name="paymentElectronically" type="String" value="10"/>
+        <prop name="paymentPrepaid" type="String" value="20"/>
+        <prop name="paymentCredit" type="String" value="30"/>
+        <prop name="paymentOther" type="String" value="40"/>
+        <prop name="payment6" type="String" value="50"/>
+        <prop name="payment7" type="String" value="60"/>
+        <prop name="payment8" type="String" value="70"/>
+        <prop name="payment9" type="String" value="80"/>
+        <prop name="payment10" type="String" value="90"/>
+
+        <!-- Соответствие налоговых ставок в ККТ и JPOS -->
+        <prop name="vat0" type="String" value="3"/>
+        <prop name="vatNo" type="String" value="4"/>
+        <prop name="vat10" type="String" value="2"/>
+        <prop name="vat18" type="String" value="1"/>
+        <prop name="vat110" type="String" value="5"/>
+        <prop name="vat118" type="String" value="6"/>
+
+        <!-- Печатать или не печатать подвал в нефискальных документах -->
+        <prop name="printNonFiscalFooter" type="String" value="1"/>
+
+        <!-- Возвращать необнуляемый итог с учетом сменного -->
+        <prop name="grandTotalsWithShiftTotals" type="String" value="0"/>
+
+        <!-- Подстрока, по которой можно определить строку клише с картинкой
+         Формат строки клише для печати картинки: ${PREFIX}N,M${PREFIX}, где
+         - ${PREFIX} - значение настройки clichePicturePrefix,
+         - N - номер картинки (картинки грузятся из файла picturesFileName попорядку, нумеруются с 1)
+         - M - смещение при печати картинки, в пикселях
+         Например, #$1,15#$.
+        -->
+        <prop name="clichePicturePrefix" type="String" value="#$"/>
+
+        <!-- Путь к файлу с описанием картиной для загрузки в ККТ -->
+        <prop name="picturesFileName" type="String" value=""/>
+
+        <!-- Количество строк заголовка чека -->
+        <prop name="numHeaderLines" type="String" value="4"/>
+
+        <!-- Количество строк подвала чека -->
+        <prop name="numTrailerLines" type="String" value="4"/>
+
+        <!-- Проверять подытог чека -->
+        <prop name="checkSubtotal" type="String" value="true"/>
+
+        <!-- Шрифт нефискальных строк -->
+        <prop name="defaultFont" type="String" value="0"/>
+
+        <!-- Воспринимать параметр unitName методов регистрации позиции как реквизит 1197 -->
+        <prop name="unitNameAsAttribute" type="String" value="0"/>
+
+        <!-- Номер чека, возвращаемый по запросу getData(FPTR_GD_RECEIPT_NUMBER)
+         0 - номер чека из ФН (сбрасывается каждую смену, по сути представляет собой кол-во чеков за смену),
+         1 - номер ФД чека из ФН (монотонно возрастает)
+        -->
+        <prop name="receiptNumberType" type="String" value="1"/>
+
+        <!-- Возвращать необнуляемый итог в МДЕ -->
+        <prop name="grandTotalsInCents" type="String" value="0"/>
+
+        <!-- Путь к csv-файлу с параметрами ККТ, которые будут записаны при подключении к ККТ.
+         Если пусто - параметры не записываются в ККТ
+        -->
+        <prop name="parametersFileName" type="String"
+              value=""/>
+    </JposEntry>
+</JposEntries>
