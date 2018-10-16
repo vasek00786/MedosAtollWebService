@@ -1,10 +1,10 @@
-package ru.vtsybulin.medos.atoll;
+package ru.varamila.medos.atoll;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import ru.atol.drivers10.fptr.Fptr;
-import ru.vtsybulin.medos.atoll.entity.Kkm;
+import ru.varamila.medos.atoll.entity.Kkm;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -15,7 +15,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import ru.atol.drivers10.fptr.IFptr;
-import ru.vtsybulin.medos.atoll.entity.Position;
+import ru.varamila.medos.atoll.entity.Position;
 
 @Path("/print")
 public class ReceiverService {

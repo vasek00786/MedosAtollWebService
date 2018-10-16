@@ -1,4 +1,4 @@
-package ru.vtsybulin.medos.atoll.entity;
+package ru.varamila.medos.atoll.entity;
 
 import java.util.ArrayList;
 import java.util.List;

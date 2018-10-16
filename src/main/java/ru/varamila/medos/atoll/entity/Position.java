@@ -1,4 +1,4 @@
-package ru.vtsybulin.medos.atoll.entity;
+package ru.varamila.medos.atoll.entity;
 
 public class Position {
     private String code;    //код услуги

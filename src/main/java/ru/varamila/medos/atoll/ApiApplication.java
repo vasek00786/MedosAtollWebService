@@ -1,4 +1,4 @@
-package ru.vtsybulin.medos.atoll;
+package ru.varamila.medos.atoll;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
