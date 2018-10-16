@@ -9,7 +9,7 @@
 
     </properties>
 
-    <groupId>ru.vtsybulin.medos</groupId>
+    <groupId>ru.varamila.medos</groupId>
     <artifactId>atoll</artifactId>
     <version>1.0</version>
     <packaging>war</packaging>
