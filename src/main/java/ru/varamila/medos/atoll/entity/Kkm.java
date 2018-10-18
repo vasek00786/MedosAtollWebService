@@ -1,5 +1,6 @@
 package ru.varamila.medos.atoll.entity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,28 +16,28 @@ public class Kkm {
     }
 
 
-    private double totalPaymentSum; //итого
-    public double getTotalPaymentSum() {
+    private BigDecimal totalPaymentSum; //итого
+    public BigDecimal getTotalPaymentSum() {
         return totalPaymentSum;
     }
-    public void setTotalPaymentSum(double totalPaymentSum) {
+    public void setTotalPaymentSum(BigDecimal totalPaymentSum) {
         this.totalPaymentSum = totalPaymentSum;
     }
 
 
-    private double totalTaxSum;  //итого ндс
-    public double getTotalTaxSum() {
+    private BigDecimal totalTaxSum;  //итого ндс
+    public BigDecimal getTotalTaxSum() {
         return totalTaxSum;
     }
-    public void setTotalTaxSum(double totalTaxSum) {
+    public void setTotalTaxSum(BigDecimal totalTaxSum) {
         this.totalTaxSum = totalTaxSum;
     }
 
-    private double totalRefundSum;  //итого вернуть
-    public double getTotalRefundSum() {
+    private BigDecimal totalRefundSum;  //итого вернуть
+    public BigDecimal getTotalRefundSum() {
         return totalRefundSum;
     }
-    public void setTotalRefundSum(double totalRefundSum) {
+    public void setTotalRefundSum(BigDecimal totalRefundSum) {
         this.totalRefundSum = totalRefundSum;
     }
 
@@ -79,7 +80,7 @@ public class Kkm {
     private String customerPhone ;
 
     public Kkm () {
-        pos = new ArrayList<Position>();
+        pos = new ArrayList<>();
     }
 
 

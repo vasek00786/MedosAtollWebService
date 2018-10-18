@@ -17,6 +17,9 @@ import javax.ws.rs.core.MediaType;
 import ru.atol.drivers10.fptr.IFptr;
 import ru.varamila.medos.atoll.entity.Position;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @Path("/print")
 public class ReceiverService {
     private static IFptr printer;
@@ -24,15 +27,17 @@ public class ReceiverService {
 
     @GET
     public String test1() {
-        return "TEst OK";
+        return "TEst OK1";
     }
 
-    @GET
-    @Path("/c")
-    @Produces("text/html")
-    public String test() {
-        return "TEst OK";
+    @POST
+    @Path("/test")
+    public String test(String jsonData) {
+        System.out.println(jsonData);
+        return jsonData;
     }
+
+
 
    @POST
    @Path("/printReceipt")
@@ -61,9 +66,6 @@ public class ReceiverService {
                 default:
                     System.out.println("I don't know wheat to do :-(");
         }
-
-
-
         return jsonData;
 
     }
@@ -76,6 +78,9 @@ public class ReceiverService {
             //isInit=true;
         }
 
+}
+private String toString(BigDecimal aSum) {
+        return aSum.setScale(2, RoundingMode.HALF_UP).toString();
 }
     private String makePayment(Kkm aKkm) {
         JsonObject ret = new JsonObject();
@@ -96,14 +101,14 @@ public class ReceiverService {
             for (Position pos:aKkm.getPos()){
                 System.out.println("add pos = "+pos.getName());
                 printer.setParam(IFptr.LIBFPTR_PARAM_COMMODITY_NAME, pos.getCode()+" "+pos.getName());
-                printer.setParam(IFptr.LIBFPTR_PARAM_PRICE, pos.getPrice());
+                printer.setParam(IFptr.LIBFPTR_PARAM_PRICE, toString(pos.getPrice()));
                 printer.setParam(IFptr.LIBFPTR_PARAM_QUANTITY, pos.getCount());
                 printer.setParam(IFptr.LIBFPTR_PARAM_TAX_TYPE, IFptr.LIBFPTR_TAX_NO);
                 printer.setParam(IFptr.LIBFPTR_PARAM_USE_ONLY_TAX_TYPE, true);
                 printer.registration();
             }
             printer.setParam(IFptr.LIBFPTR_PARAM_PAYMENT_TYPE, aKkm.getIsTerminalPayment()?IFptr.LIBFPTR_PT_ELECTRONICALLY:IFptr.LIBFPTR_PT_CASH);
-            printer.setParam(IFptr.LIBFPTR_PARAM_PAYMENT_SUM, aKkm.getTotalPaymentSum());
+            printer.setParam(IFptr.LIBFPTR_PARAM_PAYMENT_SUM, toString(aKkm.getTotalPaymentSum()));
             printer.payment();
             int a = printer.closeReceipt();
             System.out.println("closed check");
