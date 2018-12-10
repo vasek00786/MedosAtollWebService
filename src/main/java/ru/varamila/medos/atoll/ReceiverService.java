@@ -34,9 +34,7 @@ public class ReceiverService {
         return jsonData;
     }
 
-    @GET
-    @Path("/closePrinter")
-    public String closePrinter() {
+    private String closePrinter() {
         if (printer!=null  && printer.isOpened()) {
             printer.close();
             return "printer closed";
@@ -44,10 +42,10 @@ public class ReceiverService {
         return "printer already closed";
     }
 
-
    @POST
    @Path("/printReceipt")
    @Produces(MediaType.APPLICATION_JSON)
+   /*Вот тут и происходит основная работа по печати чека*/
     public String makeResponse(@Context HttpServletRequest aRequest
             ,  String jsonData) {
        System.out.println(jsonData);
