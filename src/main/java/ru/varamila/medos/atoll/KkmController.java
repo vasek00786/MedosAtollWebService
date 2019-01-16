@@ -1,38 +1,34 @@
 package ru.varamila.medos.atoll;
-/*
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-//import ru.atol.drivers10.fptr.Fptr;
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.*;
+import ru.atol.drivers10.fptr.Fptr;
+import ru.atol.drivers10.fptr.IFptr;
 import ru.varamila.medos.atoll.entity.Kkm;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-
-//import ru.atol.drivers10.fptr.IFptr;
 import ru.varamila.medos.atoll.entity.Position;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-*/
-//@Path("/print")
-public class ReceiverService {
- //   private static IFptr printer;
- //   private static boolean isInit=false;
-/*
-    @GET
-    public String test1() {
-        return "TEst OK1";
+
+@RestController
+@RequestMapping("/makePayment")
+public class KkmController {
+    private static final Logger LOG = Logger.getLogger(KkmController.class);
+
+       private static IFptr printer;
+       private static boolean isInit=false;
+
+
+    @GetMapping
+    public String test() {
+        return "Hello, test!";
     }
 
-    @POST
-    @Path("/test")
-    public String test(String jsonData) {
-        System.out.println(jsonData);
-        return jsonData;
-    }
+
 
     private String closePrinter() {
         if (printer!=null  && printer.isOpened()) {
@@ -42,17 +38,17 @@ public class ReceiverService {
         return "printer already closed";
     }
 
-   @POST
-   @Path("/printReceipt")
-   @Produces(MediaType.APPLICATION_JSON)
-   /*Вот тут и происходит основная работа по печати чека*/
-/*    public String makeResponse(@Context HttpServletRequest aRequest
-            ,  String jsonData) {
-       System.out.println(jsonData);
-        System.out.println("let s get it started");
+
+    @PostMapping("/printReceipt")
+    //@Produces(MediaType.APPLICATION_JSON)
+    /*Вот тут и происходит основная работа по печати чека*/
+    public String makeResponse(@RequestBody HttpServletRequest aRequest,  String jsonData) {
+
+       LOG.info(jsonData);
+       LOG.info("let s get it started");
         Kkm kkm = getKkmFromJson(jsonData);
         String function = kkm.getFunction();
-        System.out.println("function = "+function);
+       LOG.info("function = "+function);
         switch (function) {
             case "printXReport":
                 printReport("X",kkm);
@@ -70,20 +66,20 @@ public class ReceiverService {
 
             case "continuePrint":
                 break;
-                default:
-                    System.out.println("I don't know wheat to do :-(");
+            default:
+               LOG.info("I don't know wheat to do :-(");
         }
         return jsonData;
 
     }
-/**Инициализация принтера*/
-/*    private void initPrinter() {
+    /**Инициализация принтера*/
+    private void initPrinter() {
         if (!isInit) {
-             printer = new Fptr();
-            System.out.println("INIT_PRINTER, ver = "+printer.version());
+            printer = new Fptr();
+           LOG.info("INIT_PRINTER, ver = "+printer.version());
             isInit=true;
         }
-}
+    }
 
     private void openPrinter() {
         if (!isInit) {
@@ -94,37 +90,37 @@ public class ReceiverService {
         }
     }
 
-private String toString(BigDecimal aSum) {
+    private String toString(BigDecimal aSum) {
         return aSum.setScale(2, RoundingMode.HALF_UP).toString();
-}
+    }
 
 
     /** Приход (продажа)*/
- /*   private String makePayment(Kkm aKkm) {
+    private String makePayment(Kkm aKkm) {
         return makePaymentOrRefund(aKkm,IFptr.LIBFPTR_RT_SELL);
     }
 
     /**Возврат суммы*/
- /*   private String makeRefund(Kkm aKkm) {
+    private String makeRefund(Kkm aKkm) {
         return makePaymentOrRefund(aKkm, IFptr.LIBFPTR_RT_SELL_RETURN);
     }
 
     private String makePaymentOrRefund(Kkm aKkm, int aCheckType) {
         JsonObject ret = new JsonObject();
         try {
-            System.out.println(aCheckType+" making payment/refund, print a check!");
+           LOG.info(aCheckType+" making payment/refund, print a check!");
             openPrinter();
 
             operatorLogin(aKkm);
             printer.setParam(IFptr.LIBFPTR_PARAM_RECEIPT_TYPE, aCheckType);
             if (aKkm.getIsElectronic()!=null && aKkm.getIsElectronic()) {
-                System.out.println("is electronic = true");
+               LOG.info("is electronic = true");
                 printer.setParam(IFptr.LIBFPTR_PARAM_RECEIPT_ELECTRONICALLY, true);
                 printer.setParam(1008, aKkm.getCustomerPhone()!=null&&!aKkm.getCustomerPhone().equals("")?aKkm.getCustomerPhone():aKkm.getEmail());
             }
             printer.openReceipt();
             for (Position pos:aKkm.getPos()){
-                System.out.println("add pos = "+pos.getName());
+               LOG.info("add pos = "+pos.getName());
                 printer.setParam(IFptr.LIBFPTR_PARAM_COMMODITY_NAME, pos.getCode()+" "+pos.getName());
                 printer.setParam(IFptr.LIBFPTR_PARAM_PRICE, toString(pos.getPrice()));
                 printer.setParam(IFptr.LIBFPTR_PARAM_QUANTITY, pos.getCount());
@@ -136,7 +132,7 @@ private String toString(BigDecimal aSum) {
             printer.setParam(IFptr.LIBFPTR_PARAM_PAYMENT_SUM, toString(aKkm.getTotalPaymentSum()));
             printer.payment();
             int a = printer.closeReceipt();
-            System.out.println("closed check "+a);
+           LOG.info("closed check "+a);
             boolean isGood =checkDocumentClosed();
             if (!isGood) {
                 printer.cancelReceipt();
@@ -152,28 +148,28 @@ private String toString(BigDecimal aSum) {
             ret.addProperty("errorFullName",e.getMessage());
         }
         printer.cut();
-       closePrinter();
+        closePrinter();
 
         return ret.toString();
     }
 
-/**печать отчетов (X, Z отчеты)*/
-/*    private boolean printReport(String aReport, Kkm aKkm) {
+    /**печать отчетов (X, Z отчеты)*/
+    private boolean printReport(String aReport, Kkm aKkm) {
         openPrinter();
         if ("X".equals(aReport)) {
-            System.out.println("print X report");
+           LOG.info("print X report");
             operatorLogin(aKkm);
             printer.setParam(IFptr.LIBFPTR_PARAM_REPORT_TYPE, IFptr.LIBFPTR_RT_X);
             printer.report();
             checkDocumentClosed();
 
         } else if ("Z".equals(aReport)) {
-            System.out.println("print Z report");
+           LOG.info("print Z report");
             printer.setParam(IFptr.LIBFPTR_PARAM_REPORT_TYPE, IFptr.LIBFPTR_RT_CLOSE_SHIFT);
             printer.report();
             printer.checkDocumentClosed();
         } else if ("TEST".equals(aReport)) {
-            System.out.println("print TEST report");
+           LOG.info("print TEST report");
             printer.setParam(IFptr.LIBFPTR_PARAM_REPORT_TYPE, IFptr.LIBFPTR_RT_OFD_TEST);
             printer.report();
             printer.checkDocumentClosed();
@@ -195,7 +191,7 @@ private String toString(BigDecimal aSum) {
 
     private boolean checkDocumentClosed() {
         if (printer.checkDocumentClosed()<0) {
-            System.out.println("err = "+printer.errorDescription());
+           LOG.info("err = "+printer.errorDescription());
             return false;
         }
         return true;
@@ -205,6 +201,4 @@ private String toString(BigDecimal aSum) {
         printer.setParam(1203,aKkm.getINN()!=null?aKkm.getINN():"");
         printer.operatorLogin(); //Регистрация кассира
     }
-
-*/
 }
