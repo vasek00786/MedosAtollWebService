@@ -15,7 +15,6 @@ public class Kkm {
         this.pos = pos;
     }
 
-
     private BigDecimal totalPaymentSum; //итого
     public BigDecimal getTotalPaymentSum() {
         return totalPaymentSum;
@@ -23,7 +22,6 @@ public class Kkm {
     public void setTotalPaymentSum(BigDecimal totalPaymentSum) {
         this.totalPaymentSum = totalPaymentSum;
     }
-
 
     private BigDecimal totalTaxSum;  //итого ндс
     public BigDecimal getTotalTaxSum() {
@@ -45,38 +43,34 @@ public class Kkm {
     public String getFunction() {
         return function;
     }
-    public void setFunction(String functionName) {}
+    public void setFunction(String functionName) {this.function=functionName;}
 
     private boolean isTerminalPayment;  //нал безнал
     public boolean getIsTerminalPayment() { return isTerminalPayment; }
     public void setIsTerminalPayment(boolean isTerminalPayment) {this.isTerminalPayment=isTerminalPayment;}
 
-    private String FIO; //ФИО кассира
-    public String getFIO() {return FIO;}
-    public void setFIO(String FIO) {this.FIO = FIO;}
+    private String kassirInfo; //ФИО кассира
+    public String getKassirInfo() {return kassirInfo;}
+    public void setKassirInfo(String kassirInfo) {this.kassirInfo = kassirInfo;}
 
     /** ИНН кассира */
-    public String getINN() {return theINN;}
-    public void setINN(String aINN) {theINN = aINN;}
-    /** ИНН кассира */
-    private String theINN ;
+    public String getInn() {return inn;}
+    public void setInn(String aINN) {inn = aINN;}
+    private String inn;
 
     /** Электронный чек */
     public Boolean getIsElectronic() {return isElectronic;}
     public void setIsElectronic(Boolean aIsElectronic) {isElectronic = aIsElectronic;}
-    /** Электронный чек */
     private Boolean isElectronic ;
 
     /** Почта для электронного чека */
     public String  getEmail() {return email;}
     public void setEmail(String  aEmail) {email = aEmail;}
-    /** Почта для электронного чека */
     private String  email ;
 
     /** Номер телефона для электронного чека */
     public String getCustomerPhone() {return customerPhone;}
     public void setCustomerPhone(String aCustomerPhone) {customerPhone = aCustomerPhone;}
-    /** Номер телефона для электронного чека */
     private String customerPhone ;
 
     public Kkm () {

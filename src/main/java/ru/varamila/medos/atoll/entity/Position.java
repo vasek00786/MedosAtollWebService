@@ -32,7 +32,7 @@ public class Position {
     public String getTaxSum() { return this.taxSum; }
     public void setTaxSum(String taxSum) { this.taxSum = taxSum; }
 
-    public Position(String name,String code, int count,BigDecimal price,BigDecimal sum, String taxName,String taxSum) {
+    public Position(String name,String code, int count,BigDecimal price,BigDecimal sum, String taxSum) {
         this.name=name; this.code=code; this.count=count; this.price=price; this.sum=sum;  this.taxSum = taxSum;
     }
     public Position () {}

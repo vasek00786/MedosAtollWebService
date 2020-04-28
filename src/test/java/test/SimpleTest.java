@@ -1,14 +1,10 @@
 package test;
 
-/*
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.WebTarget;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import org.glassfish.grizzly.http.server.HttpServer;
-*/
-
-public class SimpleTest {
+public abstract class SimpleTest {
+    protected static Logger LOG = LogManager.getLogger(SimpleTest.class);
 
 
 }
